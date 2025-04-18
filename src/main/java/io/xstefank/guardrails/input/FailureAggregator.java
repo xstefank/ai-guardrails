@@ -1,12 +1,12 @@
 package io.xstefank.guardrails.input;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestScoped
 public class FailureAggregator {
 
-    public ConcurrentHashMap<String, String> failureMap = new ConcurrentHashMap<>();
+    public List<String> failureList = new ArrayList<>();
 }

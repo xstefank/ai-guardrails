@@ -6,10 +6,8 @@ import io.quarkiverse.langchain4j.guardrails.InputGuardrailResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import static io.smallrye.mutiny.helpers.Subscriptions.fail;
-
 @ApplicationScoped
-public class FailIfDoesntContainJSONWordInputGuardrail implements InputGuardrail {
+public class FailureGenerate implements InputGuardrail {
 
     @Inject
     FailureAggregator failureAggregator;
@@ -17,10 +15,11 @@ public class FailIfDoesntContainJSONWordInputGuardrail implements InputGuardrail
     @Override
     public InputGuardrailResult validate(InputGuardrailParams params) {
         String s = params.userMessage().singleText();
-        if (!s.toLowerCase().contains("json")) {
-            failureAggregator.failureMap.put("missing-json", "Response does not contain word JSON.");
-            return failure("Input prompt must contain a JSON word in order to pass.");
+        if (!s.toLowerCase().contains("generate")) {
+            failureAggregator.failureList.add("missing-generate");
+            return failure("Input prompt must contain a word \"generate\" in order to pass.");
         }
+
         return success();
     }
 }

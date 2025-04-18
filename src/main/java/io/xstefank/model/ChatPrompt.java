@@ -1,4 +1,4 @@
 package io.xstefank.model;
 
-public record ChatPrompt(String prompt, String guardrails) {
+public record ChatPrompt(String prompt, String inputGuardrails) {
 }
