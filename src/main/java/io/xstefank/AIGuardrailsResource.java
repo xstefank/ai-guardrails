@@ -2,6 +2,8 @@ package io.xstefank;
 
 import io.xstefank.guardrails.FailureJsonFailureGenerateAIService;
 import io.xstefank.guardrails.FailureJsonAIService;
+import io.xstefank.guardrails.FailureJsonFatalGenerateAIService;
+import io.xstefank.guardrails.FatalGenerateFailureJsonAIService;
 import io.xstefank.guardrails.NoGuardrailsAIService;
 import io.xstefank.guardrails.input.FailureAggregator;
 import io.xstefank.model.ChatPrompt;
@@ -27,6 +29,12 @@ public class AIGuardrailsResource {
     @Inject
     FailureJsonFailureGenerateAIService failureJsonFailureGenerateAIService;
 
+    @Inject
+    FatalGenerateFailureJsonAIService fatalGenerateFailureJsonAIService;
+
+    @Inject
+    FailureJsonFatalGenerateAIService failureJsonFatalGenerateAIService;
+
     @POST
     public RestResponse<Object> chat(ChatPrompt chatPrompt) {
         System.out.println("Chat prompt: " + chatPrompt);
@@ -40,6 +48,10 @@ public class AIGuardrailsResource {
                     return RestResponse.ok(failureJsonAIService.chat(chatPrompt.prompt()));
                 case "failure-json-failure-generate":
                     return RestResponse.ok(failureJsonFailureGenerateAIService.chat(chatPrompt.prompt()));
+                case "fatal-generate-failure-json":
+                    return RestResponse.ok(fatalGenerateFailureJsonAIService.chat(chatPrompt.prompt()));
+                case "failure-json-fatal-generate":
+                    return RestResponse.ok(failureJsonFatalGenerateAIService.chat(chatPrompt.prompt()));
             }
 
             return RestResponse.ok(noGuardrailsAIService.chat(chatPrompt.prompt()));

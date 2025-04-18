@@ -55,6 +55,8 @@ function App() {
         <option value="-">-</option>
         <option value="failure-json">failure-json</option>
         <option value="failure-json-failure-generate">failure-json-failure-generate</option>
+        <option value="fatal-generate-failure-json">fatal-generate-failure-json</option>
+        <option value="failure-json-fatal-generate">failure-json-fatal-generate</option>
       </select>
         <TextareaAutosize onChange={(e) => {
           setPrompt(e.target.value)
