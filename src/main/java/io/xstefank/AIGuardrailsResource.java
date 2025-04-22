@@ -1,11 +1,14 @@
 package io.xstefank;
 
-import io.xstefank.guardrails.FailureJsonFailureGenerateAIService;
-import io.xstefank.guardrails.FailureJsonAIService;
-import io.xstefank.guardrails.FailureJsonFatalGenerateAIService;
-import io.xstefank.guardrails.FatalGenerateFailureJsonAIService;
+import io.xstefank.aiservice.input.FailureJsonFailureGenerateAIService;
+import io.xstefank.aiservice.input.FailureJsonAIService;
+import io.xstefank.aiservice.input.FailureJsonFatalGenerateAIService;
+import io.xstefank.aiservice.input.FatalGenerateFailureJsonAIService;
+import io.xstefank.aiservice.output.JsonRepromptAIService;
+import io.xstefank.aiservice.output.JsonRewriteAIService;
 import io.xstefank.guardrails.NoGuardrailsAIService;
 import io.xstefank.guardrails.input.FailureAggregator;
+import io.xstefank.guardrails.output.JsonReprompt;
 import io.xstefank.model.ChatPrompt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -23,6 +26,8 @@ public class AIGuardrailsResource {
     @Inject
     NoGuardrailsAIService noGuardrailsAIService;
 
+    // Input guardrails AI services
+
     @Inject
     FailureJsonAIService failureJsonAIService;
 
@@ -34,6 +39,14 @@ public class AIGuardrailsResource {
 
     @Inject
     FailureJsonFatalGenerateAIService failureJsonFatalGenerateAIService;
+
+    // Output guardrails AI services
+
+    @Inject
+    JsonRepromptAIService jsonRepromptAIService;
+
+    @Inject
+    JsonRewriteAIService jsonRewriteAIService;
 
     @POST
     public RestResponse<Object> chat(ChatPrompt chatPrompt) {
@@ -52,6 +65,13 @@ public class AIGuardrailsResource {
                     return RestResponse.ok(fatalGenerateFailureJsonAIService.chat(chatPrompt.prompt()));
                 case "failure-json-fatal-generate":
                     return RestResponse.ok(failureJsonFatalGenerateAIService.chat(chatPrompt.prompt()));
+            }
+
+            switch (chatPrompt.outputGuardrails()) {
+                case "json-reprompt":
+                    return RestResponse.ok(jsonRepromptAIService.chat(chatPrompt.prompt()));
+                case "json-rewrite":
+                    return RestResponse.ok(jsonRewriteAIService.chat(chatPrompt.prompt()));
             }
 
             return RestResponse.ok(noGuardrailsAIService.chat(chatPrompt.prompt()));

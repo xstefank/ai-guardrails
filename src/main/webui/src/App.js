@@ -8,6 +8,7 @@ function App() {
 
   const [prompt, setPrompt] = useState('');
   const [inputGuardrails, setInputGuardrails] = useState('-');
+  const [outputGuardrails, setOutputGuardrails] = useState('-');
 
   const loading = document.getElementById("loading-box");
   const llmOutputWrapper = document.getElementById("llm-output-wrapper");
@@ -21,7 +22,9 @@ function App() {
     llmOutputWrapper.style.display = "none";
     try {
       await axios.post("http://localhost:8124/chat", {
-        "prompt": prompt, "inputGuardrails": inputGuardrails
+        "prompt": prompt,
+        "inputGuardrails": inputGuardrails,
+        "outputGuardrails": outputGuardrails
       }).then(value => {
         loading.style.display = "none";
         llmOutputWrapper.style.display = "block";
@@ -57,6 +60,13 @@ function App() {
         <option value="failure-json-failure-generate">failure-json-failure-generate</option>
         <option value="fatal-generate-failure-json">fatal-generate-failure-json</option>
         <option value="failure-json-fatal-generate">failure-json-fatal-generate</option>
+      </select>
+        <label>Output guardrails: </label><select name="outputGuardrails" value={outputGuardrails} onChange={(e) => {
+        setOutputGuardrails(e.target.value)
+      }} className="hyperparam" list="model-list">
+        <option value="-">-</option>
+        <option value="json-reprompt">json-reprompt</option>
+        <option value="json-rewrite">json-rewrite</option>
       </select>
         <TextareaAutosize onChange={(e) => {
           setPrompt(e.target.value)
