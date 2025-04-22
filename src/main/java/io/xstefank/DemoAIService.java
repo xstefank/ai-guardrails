@@ -1,12 +1,15 @@
 package io.xstefank;
 
+import dev.langchain4j.service.MemoryId;
+import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import io.quarkiverse.langchain4j.guardrails.OutputGuardrails;
-import io.xstefank.guardrails.output.JsonRewrite;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @RegisterAiService
+@ApplicationScoped
 public interface DemoAIService {
 
-    @OutputGuardrails(JsonRewrite.class)
-    String chat(String prompt);
+    @UserMessage("{prompt}")
+    String chat(@MemoryId int memoryId, String prompt);
 }
+

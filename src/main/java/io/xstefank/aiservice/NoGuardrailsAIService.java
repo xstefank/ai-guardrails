@@ -1,4 +1,4 @@
-package io.xstefank.guardrails;
+package io.xstefank.aiservice;
 
 import io.quarkiverse.langchain4j.RegisterAiService;
 

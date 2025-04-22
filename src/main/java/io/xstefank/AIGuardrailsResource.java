@@ -1,14 +1,14 @@
 package io.xstefank;
 
+import io.quarkus.logging.Log;
 import io.xstefank.aiservice.input.FailureJsonFailureGenerateAIService;
 import io.xstefank.aiservice.input.FailureJsonAIService;
 import io.xstefank.aiservice.input.FailureJsonFatalGenerateAIService;
 import io.xstefank.aiservice.input.FatalGenerateFailureJsonAIService;
 import io.xstefank.aiservice.output.JsonRepromptAIService;
 import io.xstefank.aiservice.output.JsonRewriteAIService;
-import io.xstefank.guardrails.NoGuardrailsAIService;
+import io.xstefank.aiservice.NoGuardrailsAIService;
 import io.xstefank.guardrails.input.FailureAggregator;
-import io.xstefank.guardrails.output.JsonReprompt;
 import io.xstefank.model.ChatPrompt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -56,7 +56,8 @@ public class AIGuardrailsResource {
         System.out.println("Chat prompt: " + chatPrompt);
 
         if (chatPrompt.demoAiService()) {
-            return RestResponse.ok(demoAIService.chat(chatPrompt.prompt()));
+            Log.error(demoAIService);
+            return RestResponse.ok(demoAIService.chat(1, chatPrompt.prompt()));
         }
 
         // clear failure aggregator list
