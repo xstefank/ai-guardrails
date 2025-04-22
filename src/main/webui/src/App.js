@@ -9,6 +9,7 @@ function App() {
   const [prompt, setPrompt] = useState('');
   const [inputGuardrails, setInputGuardrails] = useState('-');
   const [outputGuardrails, setOutputGuardrails] = useState('-');
+  const [demoAiService, setDemoAiService] = useState(false);
 
   const loading = document.getElementById("loading-box");
   const llmOutputWrapper = document.getElementById("llm-output-wrapper");
@@ -24,7 +25,8 @@ function App() {
       await axios.post("http://localhost:8124/chat", {
         "prompt": prompt,
         "inputGuardrails": inputGuardrails,
-        "outputGuardrails": outputGuardrails
+        "outputGuardrails": outputGuardrails,
+        "demoAiService": demoAiService
       }).then(value => {
         loading.style.display = "none";
         llmOutputWrapper.style.display = "block";
@@ -68,6 +70,10 @@ function App() {
         <option value="json-reprompt">json-reprompt</option>
         <option value="json-rewrite">json-rewrite</option>
       </select>
+        <label>Demo AI Service</label>
+        <input type="checkbox" checked={demoAiService} onChange={() => {
+          setDemoAiService(!demoAiService)
+        }} className="hyperparam"/>
         <TextareaAutosize onChange={(e) => {
           setPrompt(e.target.value)
         }} className="llm-input" cols="30" rows="10" placeholder="Enter your prompt here..." onKeyDown={onEnterPress}/>

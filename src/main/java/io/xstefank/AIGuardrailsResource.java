@@ -26,6 +26,9 @@ public class AIGuardrailsResource {
     @Inject
     NoGuardrailsAIService noGuardrailsAIService;
 
+    @Inject
+    DemoAIService demoAIService;
+
     // Input guardrails AI services
 
     @Inject
@@ -51,6 +54,10 @@ public class AIGuardrailsResource {
     @POST
     public RestResponse<Object> chat(ChatPrompt chatPrompt) {
         System.out.println("Chat prompt: " + chatPrompt);
+
+        if (chatPrompt.demoAiService()) {
+            return RestResponse.ok(demoAIService.chat(chatPrompt.prompt()));
+        }
 
         // clear failure aggregator list
         failureAggregator.failureList.clear();
