@@ -6,6 +6,7 @@ import io.xstefank.aiservice.input.FailureJsonAIService;
 import io.xstefank.aiservice.input.FailureJsonFailureGenerateAIService;
 import io.xstefank.aiservice.input.FailureJsonFatalGenerateAIService;
 import io.xstefank.aiservice.input.FatalGenerateFailureJsonAIService;
+import io.xstefank.aiservice.input.NameHallucinationDetectionAIService;
 import io.xstefank.aiservice.input.RewriteStarWarsAIService;
 import io.xstefank.aiservice.output.JsonRepromptAIService;
 import io.xstefank.aiservice.output.JsonRetryAIService;
@@ -49,6 +50,9 @@ public class AIGuardrailsResource {
     @Inject
     RewriteStarWarsAIService rewriteStarWarsAIService;
 
+    @Inject
+    NameHallucinationDetectionAIService nameHallucinationDetectionAIService;
+
     // Output guardrails AI services
 
     @Inject
@@ -86,6 +90,8 @@ public class AIGuardrailsResource {
                     return RestResponse.ok(failureJsonFatalGenerateAIService.chat(chatPrompt.prompt()));
                 case "rewrite-star-wars":
                     return RestResponse.ok(rewriteStarWarsAIService.chat(chatPrompt.prompt()));
+                case "name-hallucination":
+                    return RestResponse.ok(nameHallucinationDetectionAIService.chat(1, chatPrompt.prompt()));
             }
 
             switch (chatPrompt.outputGuardrails()) {

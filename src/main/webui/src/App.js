@@ -34,7 +34,7 @@ function App() {
       });
     } catch (e) {
       console.log(e);
-      llmOutput.value = e.response.data;
+      llmOutput.value = literal(e.response.data);
       llmOutput.style.color = "red";
       loading.style.display = "none";
       llmOutputWrapper.style.display = "block";
@@ -62,6 +62,7 @@ function App() {
         <option value="fatal-generate-failure-json">fatal-generate-failure-json</option>
         <option value="failure-json-fatal-generate">failure-json-fatal-generate</option>
         <option value="rewrite-star-wars">rewrite-star-wars</option>
+        <option value="name-hallucination">name-hallucination</option>
       </select>
         <label>Output guardrails: </label><select name="outputGuardrails" value={outputGuardrails} onChange={(e) => {
         setOutputGuardrails(e.target.value)
