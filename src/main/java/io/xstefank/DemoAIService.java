@@ -9,7 +9,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public interface DemoAIService {
 
-    @UserMessage("{prompt}")
-    String chat(@MemoryId int memoryId, String prompt);
+    String chat(@MemoryId int memoryId, @UserMessage String prompt);
 }
 

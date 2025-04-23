@@ -61,6 +61,7 @@ function App() {
         <option value="failure-json-failure-generate">failure-json-failure-generate</option>
         <option value="fatal-generate-failure-json">fatal-generate-failure-json</option>
         <option value="failure-json-fatal-generate">failure-json-fatal-generate</option>
+        <option value="rewrite-star-wars">rewrite-star-wars</option>
       </select>
         <label>Output guardrails: </label><select name="outputGuardrails" value={outputGuardrails} onChange={(e) => {
         setOutputGuardrails(e.target.value)

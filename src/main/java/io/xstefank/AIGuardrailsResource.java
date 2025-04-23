@@ -1,16 +1,17 @@
 package io.xstefank;
 
 import io.quarkus.logging.Log;
-import io.xstefank.aiservice.input.FailureJsonFailureGenerateAIService;
+import io.xstefank.aiservice.NoGuardrailsAIService;
 import io.xstefank.aiservice.input.FailureJsonAIService;
+import io.xstefank.aiservice.input.FailureJsonFailureGenerateAIService;
 import io.xstefank.aiservice.input.FailureJsonFatalGenerateAIService;
 import io.xstefank.aiservice.input.FatalGenerateFailureJsonAIService;
+import io.xstefank.aiservice.input.RewriteStarWarsAIService;
 import io.xstefank.aiservice.output.JsonRepromptAIService;
 import io.xstefank.aiservice.output.JsonRetryAIService;
 import io.xstefank.aiservice.output.JsonRewriteAIService;
-import io.xstefank.aiservice.NoGuardrailsAIService;
-import io.xstefank.guardrails.input.FailureAggregator;
 import io.xstefank.aiservice.output.PersonAIService;
+import io.xstefank.guardrails.input.FailureAggregator;
 import io.xstefank.model.ChatPrompt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -45,6 +46,9 @@ public class AIGuardrailsResource {
     @Inject
     FailureJsonFatalGenerateAIService failureJsonFatalGenerateAIService;
 
+    @Inject
+    RewriteStarWarsAIService rewriteStarWarsAIService;
+
     // Output guardrails AI services
 
     @Inject
@@ -64,7 +68,6 @@ public class AIGuardrailsResource {
         System.out.println("Chat prompt: " + chatPrompt);
 
         if (chatPrompt.demoAiService()) {
-            Log.error(demoAIService);
             return RestResponse.ok(demoAIService.chat(1, chatPrompt.prompt()));
         }
 
@@ -81,6 +84,8 @@ public class AIGuardrailsResource {
                     return RestResponse.ok(fatalGenerateFailureJsonAIService.chat(chatPrompt.prompt()));
                 case "failure-json-fatal-generate":
                     return RestResponse.ok(failureJsonFatalGenerateAIService.chat(chatPrompt.prompt()));
+                case "rewrite-star-wars":
+                    return RestResponse.ok(rewriteStarWarsAIService.chat(chatPrompt.prompt()));
             }
 
             switch (chatPrompt.outputGuardrails()) {
