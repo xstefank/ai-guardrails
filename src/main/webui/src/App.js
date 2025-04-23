@@ -3,7 +3,6 @@ import {useState} from "react";
 import TextareaAutosize from 'react-textarea-autosize';
 import {Commet} from "react-loading-indicators";
 
-
 function App() {
 
   const [prompt, setPrompt] = useState('');
@@ -31,7 +30,7 @@ function App() {
         loading.style.display = "none";
         llmOutputWrapper.style.display = "block";
         llmOutput.style.color = "black";
-        llmOutput.value = value.data;
+        llmOutput.value = literal(value.data);
       });
     } catch (e) {
       console.log(e);
@@ -69,6 +68,7 @@ function App() {
         <option value="-">-</option>
         <option value="json-reprompt">json-reprompt</option>
         <option value="json-rewrite">json-rewrite</option>
+        <option value="json-retry">json-retry</option>
       </select>
         <label>Demo AI Service</label>
         <input type="checkbox" checked={demoAiService} onChange={() => {
@@ -91,6 +91,14 @@ function App() {
     </div>
 
   </div>)
+}
+
+function literal(value) {
+  if (typeof value === 'object' && value !== null) {
+    return JSON.stringify(value, null, 2);
+  } else {
+    return String(value);
+  }
 }
 
 export default App
