@@ -10,6 +10,7 @@ import io.xstefank.aiservice.output.JsonRetryAIService;
 import io.xstefank.aiservice.output.JsonRewriteAIService;
 import io.xstefank.aiservice.NoGuardrailsAIService;
 import io.xstefank.guardrails.input.FailureAggregator;
+import io.xstefank.aiservice.output.PersonAIService;
 import io.xstefank.model.ChatPrompt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -55,6 +56,9 @@ public class AIGuardrailsResource {
     @Inject
     JsonRetryAIService jsonRetryAIService;
 
+    @Inject
+    PersonAIService personAIService;
+
     @POST
     public RestResponse<Object> chat(ChatPrompt chatPrompt) {
         System.out.println("Chat prompt: " + chatPrompt);
@@ -85,8 +89,9 @@ public class AIGuardrailsResource {
                 case "json-rewrite":
                     return RestResponse.ok(jsonRewriteAIService.chat(chatPrompt.prompt()));
                 case "json-retry":
-                    String chat = jsonRetryAIService.chat(chatPrompt.prompt());
-                    return RestResponse.ok(chat);
+                    return RestResponse.ok(jsonRetryAIService.chat(chatPrompt.prompt()));
+                case "person":
+                    return RestResponse.ok(personAIService.generateSamplePerson(chatPrompt.prompt()));
             }
 
             return RestResponse.ok(noGuardrailsAIService.chat(chatPrompt.prompt()));

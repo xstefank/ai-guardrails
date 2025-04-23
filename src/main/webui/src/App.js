@@ -69,6 +69,7 @@ function App() {
         <option value="json-reprompt">json-reprompt</option>
         <option value="json-rewrite">json-rewrite</option>
         <option value="json-retry">json-retry</option>
+        <option value="person">person</option>
       </select>
         <label>Demo AI Service</label>
         <input type="checkbox" checked={demoAiService} onChange={() => {
