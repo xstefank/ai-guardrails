@@ -18,10 +18,12 @@ public class HallucinationDetectionGuardrail implements InputGuardrail {
         String name = null;
 
         for (ChatMessage m : memory.messages()) {
-            String text = m.text();
-            if (text.contains("My name is")) {
-                name = parseName(text);
-                break;
+            if (m instanceof UserMessage um) {
+                String text = um.singleText();
+                if (text.contains("My name is")) {
+                    name = parseName(text);
+                    break;
+                }
             }
         }
 

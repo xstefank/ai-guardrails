@@ -1,6 +1,5 @@
 package io.xstefank;
 
-import io.quarkus.logging.Log;
 import io.xstefank.aiservice.NoGuardrailsAIService;
 import io.xstefank.aiservice.input.FailureJsonAIService;
 import io.xstefank.aiservice.input.FailureJsonFailureGenerateAIService;
@@ -8,6 +7,7 @@ import io.xstefank.aiservice.input.FailureJsonFatalGenerateAIService;
 import io.xstefank.aiservice.input.FatalGenerateFailureJsonAIService;
 import io.xstefank.aiservice.input.NameHallucinationDetectionAIService;
 import io.xstefank.aiservice.input.RewriteStarWarsAIService;
+import io.xstefank.aiservice.input.StarWarsAwesomeAIService;
 import io.xstefank.aiservice.output.JsonRepromptAIService;
 import io.xstefank.aiservice.output.JsonRetryAIService;
 import io.xstefank.aiservice.output.JsonRewriteAIService;
@@ -51,6 +51,9 @@ public class AIGuardrailsResource {
     RewriteStarWarsAIService rewriteStarWarsAIService;
 
     @Inject
+    StarWarsAwesomeAIService starWarsAwesomeAIService;
+
+    @Inject
     NameHallucinationDetectionAIService nameHallucinationDetectionAIService;
 
     // Output guardrails AI services
@@ -88,10 +91,13 @@ public class AIGuardrailsResource {
                     return RestResponse.ok(fatalGenerateFailureJsonAIService.chat(chatPrompt.prompt()));
                 case "failure-json-fatal-generate":
                     return RestResponse.ok(failureJsonFatalGenerateAIService.chat(chatPrompt.prompt()));
-                case "rewrite-star-wars":
-                    return RestResponse.ok(rewriteStarWarsAIService.chat(chatPrompt.prompt()));
                 case "name-hallucination":
                     return RestResponse.ok(nameHallucinationDetectionAIService.chat(1, chatPrompt.prompt()));
+                case "rewrite-star-wars":
+                    return RestResponse.ok(rewriteStarWarsAIService.chat(chatPrompt.prompt()));
+                case "star-wars-is-awesome":
+                    return RestResponse.ok(starWarsAwesomeAIService.chat(chatPrompt.prompt()));
+
             }
 
             switch (chatPrompt.outputGuardrails()) {

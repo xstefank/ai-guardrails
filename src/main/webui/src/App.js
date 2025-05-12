@@ -57,11 +57,12 @@ function App() {
         setInputGuardrails(e.target.value)
       }} className="hyperparam" list="model-list">
         <option value="-">-</option>
+        <option value="star-wars-is-awesome">star-wars-is-awesome</option>
+        <option value="rewrite-star-wars">rewrite-star-wars</option>
         <option value="failure-json">failure-json</option>
         <option value="failure-json-failure-generate">failure-json-failure-generate</option>
         <option value="fatal-generate-failure-json">fatal-generate-failure-json</option>
         <option value="failure-json-fatal-generate">failure-json-fatal-generate</option>
-        <option value="rewrite-star-wars">rewrite-star-wars</option>
         <option value="name-hallucination">name-hallucination</option>
       </select>
         <label>Output guardrails: </label><select name="outputGuardrails" value={outputGuardrails} onChange={(e) => {

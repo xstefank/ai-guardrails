@@ -7,18 +7,18 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class AICheckInputGuardrail implements InputGuardrail {
+public class StarWarsCheckInputGuardrail implements InputGuardrail {
 
     @Inject
-    AIValidator aiValidator;
+    StarWarsSentimentValidator starWarsSentimentValidator;
 
     @Override
     public InputGuardrailResult validate(UserMessage userMessage) {
         String input = userMessage.singleText();
-        if (!aiValidator.validate(input)) {
+        if (starWarsSentimentValidator.isImproper(input)) {
             // user input is considered improper
             return fatal(String.format("Your input \"%s\" is considered improper and " +
-                "it won't be sent to the LLM.", input));
+                "it won't be sent to the LLM because Star Wars is AWESOME!!!.", input));
         }
 
         return success();
