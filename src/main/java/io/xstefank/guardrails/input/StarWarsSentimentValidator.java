@@ -7,7 +7,7 @@ import io.quarkiverse.langchain4j.RegisterAiService;
 @RegisterAiService(modelName = "star-wars-validator")
 public interface StarWarsSentimentValidator {
 
-    @SystemMessage("You are a bot that check improper user inputs.")
+    @SystemMessage("You are a bot that checks improper user inputs.")
     @UserMessage("""
         Return whether the following user input contains any bad sentiment about Star Wars.
         
