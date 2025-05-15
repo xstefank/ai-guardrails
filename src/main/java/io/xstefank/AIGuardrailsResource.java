@@ -74,14 +74,14 @@ public class AIGuardrailsResource {
     public RestResponse<Object> chat(ChatPrompt chatPrompt) {
         System.out.println("Chat prompt: " + chatPrompt);
 
-        if (chatPrompt.demoAiService()) {
-            return RestResponse.ok(demoAIService.chat(1, chatPrompt.prompt()));
-        }
-
-        // clear failure aggregator list
-        failureAggregator.failureList.clear();
-
         try {
+            // clear failure aggregator list
+            failureAggregator.failureList.clear();
+
+            if (chatPrompt.demoAiService()) {
+                return RestResponse.ok(demoAIService.chat(1, chatPrompt.prompt()));
+            }
+
             switch (chatPrompt.inputGuardrails()) {
                 case "failure-json":
                     return RestResponse.ok(failureJsonAIService.chat(chatPrompt.prompt()));
